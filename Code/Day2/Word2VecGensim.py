@@ -15,11 +15,11 @@ class Corpus(object):
                 yield every_line.split()
 
 def compute_word_vectors():
-   text = Corpus('./corpus')
+   text = Corpus('../corpus')
    logging.getLogger('gensim.models.word2vec').setLevel(logging.INFO)
 
    model = Word2Vec(text, vector_size=300, epochs=20, window=5, min_count=5, workers=4, compute_loss=True)
-   model.save('./Models/WordVectors.w2v')
+   model.save('../Models/WordVectors.w2v')
 
 def load_model(model_file_name):
    model = Word2Vec.load(model_file_name)
@@ -31,7 +31,7 @@ def get_vocabulary(model):
 def model_parameters():
    # Get model parameters from a trained a Word2Vec
    # Model parameters are already available in this object 'model'
-   model = load_model('./Models/WordVectors.w2v')
+   model = load_model('../Models/WordVectors.w2v')
 
    # Get the size of the word vectors
    vector_size = model.vector_size
@@ -71,10 +71,13 @@ def model_parameters():
 
 def similar_words(word='finance'):
    # Get similar words for a given word
-   model = load_model('./Models/WordVectors.w2v')
-   similar_words = model.wv.most_similar(word)
-   for word, similarity in similar_words:
-      print(f"{word:20s}:{similarity:.4f}")
+   model = load_model('../Models/WordVectors.w2v')
+   if word in model.wv.vocab:
+      similar_words = model.wv.most_similar(word)
+      for word, similarity in similar_words:
+         print(f"{word:20s}:{similarity:.4f}")
+   else:
+      print(f'{word}: Not found')
    del model
 
 def main():
