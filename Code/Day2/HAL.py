@@ -113,7 +113,7 @@ class HAL:
 corpus_folder = './TXT'
 output_file = './Models/WordVectors.hal'
 
-hal = HAL(corpus_folder, min_count=50, window_size=10, nearest_neighbor=10, farthest_neighbor=1)
+hal = HAL(corpus_folder, min_count=5, window_size=10, nearest_neighbor=10, farthest_neighbor=1)
 hal.preprocess_corpus()
 hal.compute_word_vectors()
 hal.save_word_vectors(output_file)

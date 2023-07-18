@@ -120,9 +120,9 @@ class NGramLM:
                   '\n', f'Probability of the sentence {i} = {sent_probability}')
 
 if __name__ == '__main__':
-    corpus_directory = './TXT/'
-    model_directory = './Models/'
-    ngram_count = 5
+    corpus_directory = '../TXT/'
+    model_directory = '../Models/'
+    ngram_count = 6
 
     #Instantiate the object
     lm = NGramLM(corpus_directory, model_directory, ngram_count)
