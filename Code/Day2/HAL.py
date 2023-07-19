@@ -49,10 +49,11 @@ class HAL:
 
     '''Compute the word vectors using HAL algorithm'''
     def compute_word_vectors(self):
+        self.preprocess_corpus()
         #get the vocab count as word_counts holds the unique set of words 
         # whose frequencies are > min_count
         vocab_size = len(self.word_counts)
-
+        print(f'Vocabulary size = {vocab_size}')
         #initialize the word vector matrix or incidence matrix
         self.word_vectors = np.zeros((vocab_size, vocab_size), dtype=np.float32)
 
@@ -120,7 +121,7 @@ class HAL:
                 number_of_zeros += 1
             elif number > 0:
                 number_of_positives += 1
-        print(f'Length of the {word} vector = {len(wv)}')
+        print(f'Length of the "{word}" vector = {len(wv)}')
         print(f'Number of zeros = {number_of_zeros}')
         print(f'Number of values > 0 = {number_of_positives}')
         sparcity = (number_of_zeros/len(wv))*100
@@ -131,9 +132,8 @@ corpus_folder = './TXT'
 # output_file = './Models/WordVectors.hal'
 
 hal = HAL(corpus_folder, min_count=5, window_size=10, nearest_neighbor=10, farthest_neighbor=1)
-hal.preprocess_corpus()
-# hal.compute_word_vectors()
-# hal.save_word_vectors()
+hal.compute_word_vectors()
+hal.save_word_vectors()
 
 # Load saved word vectors
 hal.load_word_vectors()
@@ -147,6 +147,7 @@ while (1):
 
 
 #Exercise
+#0. Use both the word vectors and similarity operations
 #1. Change parameters such as min_count, window_size, nearest_neighbor, farthest_neighbor
 #   note the changes that you find
 #2. Remove unwanted tokens such as number and try the algorithm

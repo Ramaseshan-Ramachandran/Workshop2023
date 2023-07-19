@@ -90,3 +90,6 @@ def main():
          word = input('Similar word for: ')
          similar_words(word)
 main()
+
+#Exercise - Preprocess to remove words with puctuations 
+# recompute the word vectors 
