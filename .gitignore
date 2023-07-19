@@ -1,11 +1,2 @@
-Day1/.DS_Store
-Day2/.DS_Store
-Day3/.DS_Store
-Day4/.DS_Store
-Code/.DS_Store4
-Presentations/.DS_Store
-ResearchPapers/.DS_Store
-TXT/.DS_Store
-corpus/.DS_Store
-Models/
-.DS_Store
+Models
+**.DS_Store

@@ -14,7 +14,7 @@ from nltk.corpus import stopwords
 stop_words = set(stopwords.words('english'))
 
 class HAL:
-    def __init__(self, corpus_folder, min_count, window_size, nearest_neighbor, farthest_neighbor):
+    def __init__(self, corpus_folder, min_count, window_size, nearest_neighbor, farthest_neighbor, model_file='./Models/WordVectors.hal'):
         self.corpus_folder = corpus_folder
         self.min_count = min_count
         self.window_size = window_size
@@ -24,6 +24,7 @@ class HAL:
         self.idx2word = {}
         self.word_counts = {}
         self.word_vectors = None
+        self.model_file = model_file
 
     def preprocess_corpus(self):
         # Collect word counts
@@ -90,12 +91,12 @@ class HAL:
         
             print("\r {0:5d}/{1:3d} of files processed".format(file_idx,file_count),end='')
     
-    def save_word_vectors(self, output_file):
-        with open(output_file, 'wb') as file:
+    def save_word_vectors(self):
+        with open(self.model_file, 'wb') as file:
             pickle.dump(self.word_vectors, file)
 
-    def load_word_vectors(self, input_file):
-        with open(input_file, 'rb') as file:
+    def load_word_vectors(self):
+        with open(self.model_file, 'rb') as file:
             self.word_vectors = pickle.load(file)
 
     def distance_measure(self, word):
@@ -109,23 +110,40 @@ class HAL:
         else:
             return [], []
 
+    def print_sparcity(self,word):
+        word_idx = self.word2idx[word]
+        wv = self.word_vectors[word_idx]
+        number_of_zeros = 0
+        number_of_positives = 0
+        for number in wv:
+            if number == 0:
+                number_of_zeros += 1
+            elif number > 0:
+                number_of_positives += 1
+        print(f'Length of the {word} vector = {len(wv)}')
+        print(f'Number of zeros = {number_of_zeros}')
+        print(f'Number of values > 0 = {number_of_positives}')
+        sparcity = (number_of_zeros/len(wv))*100
+        print(f'Sparcity = {sparcity:.2f}%')
+
 # Example usage
 corpus_folder = './TXT'
-output_file = './Models/WordVectors.hal'
+# output_file = './Models/WordVectors.hal'
 
 hal = HAL(corpus_folder, min_count=5, window_size=10, nearest_neighbor=10, farthest_neighbor=1)
 hal.preprocess_corpus()
-hal.compute_word_vectors()
-hal.save_word_vectors(output_file)
+# hal.compute_word_vectors()
+# hal.save_word_vectors()
 
 # Load saved word vectors
-hal.load_word_vectors(output_file)
+hal.load_word_vectors()
 
 # Distance measure example
 while (1):
     word = input('\nInput word:')
     similar_words = hal.distance_measure(word)
     print(f"Similar words to '{word}': {similar_words}")
+    hal.print_sparcity(word)
 
 
 #Exercise
