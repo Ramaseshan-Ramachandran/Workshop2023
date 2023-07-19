@@ -5,6 +5,7 @@ import pandas as pd
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.collocations import BigramCollocationFinder
+from nltk import ngrams
 
 # Set the path to the folder containing the text files
 folder_path = "./TXT"
