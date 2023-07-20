@@ -6,7 +6,7 @@ def extract_bigrams(text):
     tokens = nltk.word_tokenize(text)
     
     # Generate the bigrams
-    bigrams = list(ngrams(tokens, 2))
+    bigrams = list(ngrams(tokens, 3))
     # What happens when use
     # bigrams = ngrams(tokens,2,
     #                 pad_left=True, pad_right=True,

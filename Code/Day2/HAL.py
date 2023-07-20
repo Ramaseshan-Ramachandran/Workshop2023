@@ -142,8 +142,10 @@ hal.load_word_vectors()
 while (1):
     word = input('\nInput word:')
     similar_words = hal.distance_measure(word)
+
     print(f"Similar words to '{word}': {similar_words}")
     hal.print_sparcity(word)
+
 
 
 #Exercise
